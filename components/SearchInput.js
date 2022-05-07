@@ -9,7 +9,7 @@ export default function SearchInput() {
   useEffect(() => {
     // to minimize the fetch requests while the user is typing
     let interval;
-    if (query) {
+    if (query !== null && query !== undefined) {
       interval = setTimeout(() => {
         dispatch(fetchStories(query, page)); //send request only when timer is over after user has finished typing
       }, 800);
@@ -21,6 +21,7 @@ export default function SearchInput() {
 
   const handleChange = (e) => {
     dispatch(setQuery(e.target.value));
+    //dispatch(fetchStories(query, page));
   };
   return (
     <input

@@ -12,7 +12,7 @@ export default function PagesCmd() {
     dispatch(setPage(page === maxPages - 1 ? maxPages - 1 : page + 1));
 
     if (!stories[page + 1]) {
-      dispatch(fetchStories(query, page));
+      dispatch(fetchStories(query, page + 1));
     }
   };
   const pageBackward = () => {

@@ -20,4 +20,4 @@ Here is a list of the technologies used in this project.
 
 - [with-redux-thunk](https://github.com/vercel/next.js/tree/canary/examples/with-redux-thunk) - An example to show how to integrate Redux and Redux Thunk in Next.js.
 
-You can see the the result of the application deployed here: https://quiz-app-redux-adelinked.netlify.app
+You can see the the result of the application deployed here: https://hacker-news-adelinked.netlify.app

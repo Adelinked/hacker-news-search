@@ -11,12 +11,7 @@ import { fetchStories } from "../store/actions/storiesActions";
 import { useEffect } from "react";
 
 const Index = () => {
-  const dispatch = useDispatch();
   const { error, loading, query, page } = useSelector((state) => state.stories);
-
-  useEffect(() => {
-    dispatch(fetchStories(query, page));
-  }, []);
 
   return (
     <>
