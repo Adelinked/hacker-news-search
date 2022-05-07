@@ -1,117 +1,51 @@
 import Head from "next/head";
-import Question from "../components/Question";
-import Results from "../components/Results";
-import Progress from "../components/Progress";
-import Form from "../components/Form";
+
+import SearchInput from "../components/SearchInput";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setQuestions,
-  setCurrent,
-  restart,
-  setShowAnswerStatus,
-} from "../store/actions/questionsAction";
+import Hits from "../components/Hits";
+import Loading from "../components/Loading";
+import PagesCmd from "../components/PagesCmd";
+
+import { fetchStories } from "../store/actions/storiesActions";
+import { useEffect } from "react";
 
 const Index = () => {
   const dispatch = useDispatch();
-  const { error, loading, questions, current, showForm, showAnswerStatus } =
-    useSelector((state) => state.questions);
+  const { error, loading, query, page } = useSelector((state) => state.stories);
 
-  const handleAnswer = (a) => {
-    dispatch(setShowAnswerStatus(true));
-    const newQuestions = [...questions];
-    newQuestions[current].made = a;
-    if (a === questions[current].correct_answer) {
-      newQuestions[current].correct = true;
-    } else {
-      newQuestions[current].correct = false;
-    }
-    dispatch(setQuestions(newQuestions));
-    const id = String(a) + String(current);
-    questions[current].correct
-      ? document.getElementById(id).classList.add("answer-correct")
-      : document.getElementById(id).classList.add("answer-wrong");
-    setTimeout(() => {
-      dispatch(
-        setCurrent(current === questions.length ? current : current + 1)
-      );
-      dispatch(setShowAnswerStatus(false));
-    }, 800);
-  };
+  useEffect(() => {
+    dispatch(fetchStories(query, page));
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Quiz app</title>
+        <title>Hacker News Search</title>
         <meta name="description" content="Quiz app by next js" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="title-div">
-        <h1>Quiz app</h1>
+        <h1>Hacker News</h1>
         <a
-          href="https://opentdb.com/api_config.php"
+          href="https://hn.algolia.com/api/"
           target="_blank"
           rel="noreferrer"
-          title="Powered by Open Trivia"
+          title="Powered by Hacker News"
         >
           <img
-            style={{ width: "80px", objectFit: "cover" }}
-            src="OTdb.png"
-            alt="Open Trivia db logo"
+            style={{ width: "40px", objectFit: "cover" }}
+            src="HN.png"
+            alt="Hacker News logo"
           />
         </a>
       </div>
-      {false && !showForm && (
-        <div className="cat-div">
-          <p>Category: {formValues.category}</p>
-          <p>Difficulty: {formValues.difficulty}</p>
-        </div>
-      )}
-      <p style={{ textAlign: "center", height: "20px", color: "red" }}>
-        {error && "Something went wrong try again "}
-      </p>
-      {loading && <div className="loading">...Loading</div>}
-      {!showForm && (
-        <div className="global-div">
-          {!loading && (
-            <>
-              {current < questions.length && <Progress />}
-              {current < questions.length && (
-                <button
-                  onClick={() => {
-                    dispatch(restart());
-                  }}
-                >
-                  Restart
-                  <span style={{ marginLeft: "5px", fontSize: "2.2rem" }}>
-                    &#10226;
-                  </span>
-                </button>
-              )}
-              <div className="answer-status">
-                {showAnswerStatus && (
-                  <>
-                    {questions[current] && questions[current].correct ? (
-                      <p style={{ color: "var(--main-green)" }}>
-                        Correct answer!
-                      </p>
-                    ) : (
-                      <p style={{ color: "var(--main-red)" }}>Wrong answer!</p>
-                    )}
-                  </>
-                )}
-              </div>
-              {current < questions.length && (
-                <Question handleAnswer={handleAnswer} />
-              )}
-
-              {current == questions.length && questions.length > 1 && (
-                <Results />
-              )}
-            </>
-          )}
-        </div>
-      )}
-      {showForm && <Form />}
+      <div className="global-div">
+        <SearchInput className="search-input" />
+        <p className="error-container">{error && "Something went wrong..."}</p>
+        <PagesCmd />
+        {!loading ? <Hits /> : <Loading />}
+      </div>{" "}
       <Footer />
     </>
   );

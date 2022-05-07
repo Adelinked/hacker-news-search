@@ -1,8 +1,6 @@
-export const FETCH_QUESTIONS = "FETCH_QUESTIONS";
-export const LOADING_QUESTIONS = "LOADING_QUESTIONS";
+export const FETCH_STORIES = "FETCH_STORIES";
+export const LOADING_STORIES = "LOADING_STORIES";
 export const ERROR = "ERROR";
-export const SET_QUESTIONS = "SET_QUESTIONS";
-export const SET_CURRENT = "SET_CURRENT";
-export const SET_SHOW_FORM = "SET_SHOW_FORM";
-export const SET_SHOW_ANSWER_STATUS = "SET_SHOW_ANSWER_STATUS";
-export const RESTART = "RESTART";
+export const SET_QUERY = "SET_QUERY";
+export const SET_PAGE = "SET_PAGE";
+export const REMOVE_HIT = "REMOVE_HIT";
