@@ -11,7 +11,7 @@ const initialState = {
   loading: false,
   error: false,
   stories: [],
-  query: "Java",
+  query: "JavaScript",
   page: 0,
   maxPages: 20,
 };
