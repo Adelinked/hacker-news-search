@@ -1,4 +1,4 @@
-# Quiz application developed with Next.js React framework
+# Hacker news search application developed with Next.js React framework
 
 This project contains the source code of a hacker news search app using Redux Thunk for state management.
 
